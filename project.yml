@@ -1,0 +1,55 @@
+name: SwiftUI-Sample
+options:
+  minimumXcodeGenVersion: 2.2.0
+  createIntermediateGroups: true
+targets:
+  #macOS application
+  SwiftUI-Sample:
+    platform: macOS
+    type: application
+    sources:
+      - SwiftUI-Sample
+    dependencies:
+      - target: AppCore
+    configFiles:
+      Debug: configs/SwiftUI-Sample-Debug.xcconfig
+      Release: configs/SwiftUI-Sample-Release.xcconfig
+    scheme:
+      environmentVariables:
+        ENABLE_SIGNPOST: YES
+  # Framework Targets
+  AppCore:
+    platform: macOS
+    type: framework
+    sources:
+      - AppCore
+    configFiles:
+      Debug: configs/AppCore-Debug.xcconfig
+      Release: configs/AppCore-Release.xcconfig
+  #Test Targets
+  SwiftUI-SampleTests:
+    platform: macOS
+    type: bundle.unit-test
+    configFiles:
+      Debug: configs/SwiftUI-SampleTests.xcconfig
+    sources:
+      - Tests/SwiftUI-SampleTests
+    dependencies:
+      - target: SwiftUI-Sample
+    scheme:
+      testTargets:
+        - SwiftUI-SampleTests
+      gatherCoverageData: true
+  AppCoreTests:
+    platform: macOS
+    type: bundle.unit-test
+    configFiles:
+      Debug: configs/AppCoreTests.xcconfig
+    sources:
+      - Tests/AppCoreTests
+    dependencies:
+      - target: AppCore
+    scheme:
+      testTargets:
+        - AppCoreTests
+      gatherCoverageData: true
